@@ -1,4 +1,4 @@
-# Codex_Magnus_SCRIBD_random_PDF_Generator
+# Codex_Magnus_SCRIBD_Random_PDF_Generator
 # The Tale of the Random PDF Generator
 
 ## Introduction
