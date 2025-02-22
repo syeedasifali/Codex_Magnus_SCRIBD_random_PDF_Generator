@@ -1,0 +1,64 @@
+import os
+import random
+import uuid
+from fpdf import FPDF
+
+# Sample titles and authors
+titles = [
+    "The Shadow of the Tower",
+    "The Cursed Amulet",
+    "Echoes of the Forgotten",
+    "The Knight's Oath",
+    "Whispers in the Fog",
+    "The Lost Prophecy",
+    "Beneath the Ruins",
+    "Secrets of the Arcane",
+    "The Final Hour",
+    "A Tale of Betrayal"
+]
+authors = [
+    "Rowena of Avalon",
+    "Edwin Blackwood",
+    "Margaret Evermore",
+    "Sir Cedric Falstaff",
+    "Nathaniel Graves",
+    "Isabella Thorn",
+    "Lysander Crow",
+    "Julian Ashford",
+    "Eleanor Ravenshade",
+    "Theodore Vance"
+]
+
+# Sample story content
+def generate_story():
+    return ("Once upon a time, in a land forgotten by time, "
+            "a brave soul embarked on a journey filled with peril and wonder. "
+            "Each step forward unraveled mysteries older than the stars, "
+            "as shadows whispered secrets of the past. "
+            "What they found would change history forever. " * random.randint(10, 15))
+
+# Function to create a PDF
+def create_pdf(title, author, output_folder):
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_font("Arial", style="B", size=16)
+    pdf.cell(200, 10, title, ln=True, align='C')
+    pdf.ln(10)
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, f"by {author}", ln=True, align='C')
+    pdf.ln(10)
+    pdf.set_font("Arial", size=11)
+    pdf.multi_cell(0, 10, generate_story())
+    
+    file_name = f"{title}_{uuid.uuid4().hex[:6]}.pdf"
+    pdf.output(os.path.join(output_folder, file_name), 'F')
+
+# Generate multiple PDFs
+def generate_pdfs():
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+    selected_indices = random.sample(range(len(titles)), 5)
+    for i in selected_indices:
+        create_pdf(titles[i], authors[i], script_directory)
+
+generate_pdfs()
